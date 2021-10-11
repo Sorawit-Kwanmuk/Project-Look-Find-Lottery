@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       imageProfile: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       qrCodeLine: {
         type: DataTypes.STRING,

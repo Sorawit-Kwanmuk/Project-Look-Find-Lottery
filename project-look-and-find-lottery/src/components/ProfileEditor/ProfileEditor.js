@@ -26,7 +26,7 @@ function ProfileEditor() {
       try {
         //error
         const response = await axios.get(`/profiles/${user.id}`);
-        console.log(response.data.user.UserProfile.imageProfile);
+        // console.log(response.data.user.UserProfile.imageProfile);
         setInput({
           username: response.data.user.username,
           name:
@@ -71,7 +71,7 @@ function ProfileEditor() {
     fetchProfile();
   }, []);
   console.log(input);
-  console.log(profileImage);
+  // console.log(profileImage);
 
   const handleSaveProfile = async e => {
     try {

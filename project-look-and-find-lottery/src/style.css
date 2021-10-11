@@ -334,7 +334,7 @@ button {
 
 .profile_seller_area>.profile_style {
     margin: 0;
-    height: 25px;
+
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -1102,7 +1102,10 @@ button {
 #input_lottery_number,
 #input_lottery_value {
     border-radius: 0 10px 10px 0px;
+    margin-left: 5px;
+
 }
+
 
 .half_bottom_input>button {
     border-radius: 10px;
