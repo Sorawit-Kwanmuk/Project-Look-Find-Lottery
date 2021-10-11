@@ -1,0 +1,152 @@
+.lottery_body {
+    font-size: 14px;
+    width: 300px;
+    height: 100px;
+    background-color: #64b9ec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px;
+    margin: 10px;
+}
+
+.lottery_body_edit {
+    font-size: 14px;
+    width: 300px;
+    height: 150px;
+    background-color: #64b9ec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px;
+    margin-bottom: 10px;
+}
+
+.button_ticket {
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px #000;
+}
+
+.edit_ticket {
+    background: rgb(0, 255, 213);
+}
+
+.delete_ticket {
+    background: rgb(255, 74, 74);
+}
+
+.div_ticket_top_edit {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: darkgoldenrod; */
+    height: 20%;
+    width: 100%;
+}
+
+.div_ticket_top {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: darkgoldenrod; */
+    height: 30%;
+    width: 100%;
+
+}
+
+.div_ticket_bottom_edit {
+    display: flex;
+    flex-direction: row;
+    /* background-color: salmon; */
+    height: 50%;
+    width: 100%;
+}
+
+.div_ticket_bottom {
+    display: flex;
+    flex-direction: row;
+    /* background-color: salmon; */
+    height: 60%;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.lottery_number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 90%;
+    margin: 5px;
+    background-color: snow;
+    border-radius: 10px;
+}
+
+.div_amount_lottry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 90%;
+    background-color: #c0e1ff;
+    border-radius: 5px;
+    margin: 1px;
+    margin-right: 5px;
+}
+
+.div_amount_lottry>.amount_lottry_label1,
+.amount_lottery,
+.amount_lottry_label2 {
+    margin: 0px 5px 0px 5px;
+}
+
+.div_amount_lottry>.amount_lottery {
+    display: flex;
+    background-color: snow;
+    width: 25px;
+    height: 90%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.div_ticket_access {
+    height: 100%;
+    width: 70%;
+    /* background-color: springgreen; */
+}
+
+.div_ticket_access>.label_style {
+    margin: 1.5px 5px 0px 5px;
+    border-radius: 5px 5px 0px 0px;
+    background-color: #c0e1ff;
+}
+
+.div_ticket_access>.access_area {
+    height: 65%;
+    background-color: white;
+
+    border-radius: 0px 0px 5px 5px;
+    margin: 0px 5px 0px 5px;
+}
+
+.div_ticket_date>.label_style {
+    margin: 1.5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
+    background-color: #c0e1ff;
+}
+
+.div_ticket_date>.date_area {
+    display: flex;
+    justify-content: center;
+    height: 65%;
+    background-color: white;
+    border-radius: 0px 0px 5px 5px;
+    margin: 0px 5px 0px 0px;
+
+}
