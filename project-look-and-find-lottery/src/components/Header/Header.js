@@ -1,8 +1,12 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/authContext';
+import { LotteryContext } from '../../contexts/lotteryContext';
+import { setToken, removeToken } from '../../services/localStorage';
 import '../../style.css';
+
 function Header() {
+  const { setLottery } = useContext(LotteryContext);
   const { user, setUser } = useContext(AuthContext);
 
   // const setUser = useContext(AuthContext);
@@ -48,6 +52,9 @@ function Header() {
   const handleClickLogout = () => {
     setUser(null);
     handleAfterClick();
+    //delete token
+    setLottery([]);
+    removeToken();
   };
 
   return (

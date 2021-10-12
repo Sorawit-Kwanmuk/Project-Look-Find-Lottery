@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios from '../../config/axios';
 import jwtDecode from 'jwt-decode';
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../contexts/authContext';
+import { LotteryContext } from '../../contexts/lotteryContext';
 import { setToken, getToken } from '../../services/localStorage';
 import '../../style.css';
 
@@ -12,12 +13,14 @@ function LoginBody({ setError }) {
   const [usernameOrPhone, setUsernameOrPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+  const { lottery, setLottery } = useContext(LotteryContext);
 
   const history = useHistory();
 
   const handleSubmitLogin = async e => {
     e.preventDefault();
+    console.log('User', user);
     try {
       if (isNaN(+usernameOrPhone)) {
         // console.log(usernameOrPhone);
@@ -28,6 +31,17 @@ function LoginBody({ setError }) {
         });
         setToken(res.data.token);
         setUser(jwtDecode(res.data.token));
+        const fetchDataFromProfile = async () => {
+          try {
+            const result = await axios.get(`/profiles/${user.id}`);
+            console.log('result: ', result);
+            setLottery(result);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchDataFromProfile();
+
         history.replace('/');
       } else if (!isNaN(+usernameOrPhone)) {
         console.log(usernameOrPhone);
@@ -36,6 +50,16 @@ function LoginBody({ setError }) {
           password: password,
         });
         setToken(res.data.token);
+        const fetchDataFromProfile = async () => {
+          try {
+            const result = await axios.get(`/profiles/${user.id}`);
+            console.log('result: ', result);
+            setLottery(result);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchDataFromProfile();
         // setUser(res.data.token);
         history.replace('/');
       }

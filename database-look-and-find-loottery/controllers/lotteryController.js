@@ -14,13 +14,22 @@ exports.getAllLottery = async (req, res, next) => {
   }
 };
 
+exports.getAllOfLottery = async (req, res, next) => {
+  try {
+    //get all data from lottery table
+    const lottery = await LotteryTicket.findAll({});
+    res.status(200).json({ lottery });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getLotteryById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const lottery = await LotteryTicket.findOne({
+    const lottery = await LotteryTicket.findAll({
       where: {
-        id,
-        userId: req.user.id,
+        userId: id,
       },
     });
     res.status(200).json({ lottery });
@@ -31,12 +40,16 @@ exports.getLotteryById = async (req, res, next) => {
 
 exports.createLotteryTicket = async (req, res, next) => {
   try {
-    const { lotteryNumber, lotteryQuantity, lotteryLocation } = req.body;
+    // console.log(req.body);
+    const { id } = req.params;
+    const { lotteryNumber, lotteryQuantity, lotteryLocation, dateInput } =
+      req.body;
     const lottery = await LotteryTicket.create({
       lotteryNumber,
       lotteryQuantity,
       lotteryLocation,
-      userId: req.user.id,
+      dateInput,
+      userId: id,
     });
     res.status(201).json({ lottery });
   } catch (error) {
@@ -80,14 +93,15 @@ exports.deleteLottery = async (req, res, next) => {
     const rows = await LotteryTicket.destroy({
       where: {
         id,
-        userId: req.user.id,
       },
     });
+
     if (rows === 0) {
       res.status(404).json({
         message: 'Fail to delete lottery',
       });
     }
+
     res.status(200).json({
       message: 'Lottery deleted successfully',
     });

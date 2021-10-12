@@ -239,7 +239,7 @@ button {
     background-color: #d6ecff;
     border-radius: 10px;
     margin: 0% auto;
-    height: 90vh
+    height: 100%
 }
 
 .output_search>.label_style,
@@ -450,16 +450,23 @@ button {
     padding: 10px 10px 0px 10px;
 }
 
-.midle_input {
+.middle_input {
     text-align: start;
     padding: 10px;
+    width: 60%;
+}
+
+.middle_input2 {
+    text-align: start;
+    padding: 10px;
+    width: 25%;
 }
 
 #input_lottery_access {
     text-align: top;
     width: 100%;
     min-height: 0;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
 
@@ -469,14 +476,28 @@ button {
     background-color: #b1daf3;
     border-radius: 10px 10px 10px 10px;
     padding-left: 5px;
-    margin-bottom: 5px;
+
     padding-bottom: 2px;
     padding-right: 2px;
+    margin: 0px 5px 0px 5px;
 }
 
-.midle_input>.label_lottery_access {
+.wrap_middle {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0 auto;
+}
+
+.middle_input>.label_lottery_access {
     background-color: #b1daf3;
     padding: 5px;
+    border-radius: 10px;
+}
+
+.middle_input2>.label_lottery_date {
+    background-color: #b1daf3;
+    padding: 5px;
+
     border-radius: 10px;
 }
 
@@ -485,6 +506,14 @@ button {
 }
 
 .half_bottom_input>button {
+    margin: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+.button_cancel,
+.button_delete_all {
+    border-radius: 10px;
     margin: 5px;
     width: 100px;
     height: 30px;
@@ -804,6 +833,24 @@ button {
 
     }
 
+    .wrap_middle {
+        display: flex;
+        flex-flow: column;
+        padding: 0 auto;
+    }
+
+    .middle_input {
+        text-align: start;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .middle_input2 {
+        text-align: start;
+        padding: 10px;
+        width: 100%;
+    }
+
     /* .button.secondary {
         border-bottom: 1px #444 solid;
     } */
@@ -939,7 +986,7 @@ button {
 /* Desktop menu */
 @media all and (min-width: 800px) {
     .output_search {
-        height: 90vh
+        height: 100%;
     }
 
 
@@ -1103,6 +1150,7 @@ button {
 #input_lottery_value {
     border-radius: 0 10px 10px 0px;
     margin-left: 5px;
+    width: 100px;
 
 }
 
@@ -1379,4 +1427,9 @@ button {
     box-shadow: 10px 10px 5px grey;
     font-weight: 500;
     font-size: 22px;
+}
+
+.div_ticket_access>.access_area {
+    padding: 0px 4px 0px 4px;
+    text-align: left;
 }

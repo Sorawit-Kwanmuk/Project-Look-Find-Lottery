@@ -1,18 +1,24 @@
+import axios from '../../config/axios';
 import './style_lottery.css';
-function Lottery_ticket_Edit() {
+function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
+  const { id, lotteryNumber, lotteryQuantity, lotteryLocation, dateInput } =
+    item;
+
   return (
     <>
       <div className='lottery_body_edit'>
         <div className='div_ticket_top_edit'>
           <div className='lottery_number'>
-            <p>X X X X X X </p>
+            <p>
+              {lotteryNumber.toString().replace(/\B(?=(\d{1})+(?!\d))/g, ` `)}
+            </p>
           </div>
           <div className='div_amount_lottry'>
-            <label for='' className='amount_lottry_label1'>
+            <label htmlFor='' className='amount_lottry_label1'>
               จำนวน
             </label>
-            <div className='amount_lottery'>0</div>
-            <label for='' className='amount_lottry_label2'>
+            <div className='amount_lottery'>{lotteryQuantity}</div>
+            <label htmlFor='' className='amount_lottry_label2'>
               ใบ
             </label>
           </div>
@@ -20,22 +26,26 @@ function Lottery_ticket_Edit() {
         <div className='div_ticket_bottom_edit'>
           <div className='div_ticket_access'>
             <div className='label_style'>
-              <label for=''>สถานที่</label>
+              <label htmlFor=''>สถานที่ขาย</label>
             </div>
-            <div className='access_area'></div>
+            <div className='access_area'>{lotteryLocation}</div>
           </div>
           <div className='div_ticket_date'>
             <div className='label_style'>
-              <label for=''>วันที่เข้าสู่ระบบ</label>
+              <label htmlFor=''>วันที่เข้าสู่ระบบ</label>
             </div>
             <div className='date_area'>
-              <p>XX/XX/XXX</p>
+              <p>{dateInput.slice(0, 10)}</p>
             </div>
           </div>
         </div>
         <div className='div_button'>
           <button className='button_ticket edit_ticket'>แก้ไข</button>
-          <button className='button_ticket delete_ticket'>ลบ</button>
+          <button
+            className='button_ticket delete_ticket'
+            onClick={handleClickDeleteTicket}>
+            ลบ
+          </button>
         </div>
       </div>
     </>

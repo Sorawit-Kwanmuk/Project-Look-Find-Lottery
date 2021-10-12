@@ -11,7 +11,7 @@ exports.authenticate = async (req, res, next) => {
     // console.log(headers);
 
     const { authorization } = req.headers;
-    console.log(authorization);
+    // console.log(authorization);
     if (!authorization || !authorization.startsWith('Bearer ')) {
       //authorization ถ้าใช้เป็น token ต้องขึ้นต้นด้วย Bearer เสมอ
       return res.status(401).json({
@@ -81,7 +81,7 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const { username, phone, password } = req.body;
-    console.log(username);
+    // console.log(username);
     let result;
     if (username) {
       result = await User.findOne({
