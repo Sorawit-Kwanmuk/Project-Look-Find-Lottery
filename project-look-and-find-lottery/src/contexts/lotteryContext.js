@@ -10,7 +10,7 @@ function LotteryContextProvider({ children }) {
   const [lottery, setLottery] = useState([]);
 
   useEffect(() => {
-    // console.log('1');
+    // console.log('1xxxxxxxxxx');
     if (user) {
       axios
         .get(`/lotteries/${user.id}`)
@@ -34,7 +34,7 @@ function LotteryContextProvider({ children }) {
     }
 
     return () => {};
-  }, []);
+  }, [user]);
 
   // console.log(lottery);
   return (

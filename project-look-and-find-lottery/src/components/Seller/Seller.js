@@ -81,7 +81,7 @@ function Seller() {
       const targetIndex = newArr.findIndex(item => item.id === id);
       if (targetIndex !== -1) {
         newArr.splice(targetIndex, 1);
-        console.log('newArr', newArr);
+        // console.log('newArr', newArr);
         setLottery(newArr);
       }
     } catch (error) {
@@ -99,7 +99,7 @@ function Seller() {
         dateInput: profile.dateInput,
       });
       const newArr = [...lottery];
-      console.log(newArr);
+      // console.log(newArr);
       newArr.push({
         lotteryNumber: profile.lotteryNumber,
         lotteryQuantity: profile.lotteryQuantity,
@@ -136,10 +136,10 @@ function Seller() {
       </div>
       <div className='first'>
         <div className='first_one'>
-          <img src='./img/Human icon.png' alt='' />
+          <img src={profile.imageProfile} alt='' />
         </div>
         <div className='first_two'>
-          <img src='./img/MyQR.JPG' alt='' />
+          <img src={profile.qrCodeLine} alt='' />
         </div>
         <div className='first_three'>
           <div className='data seller_name'>

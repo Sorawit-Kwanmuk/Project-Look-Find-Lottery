@@ -9,10 +9,10 @@ const imageUpload = async (req, res, next) => {
   const { id } = req.params;
   const { imageProfile, qrCodeLine } = req.body;
   try {
-    console.log('11111');
-    console.log(req.files);
+    // console.log('11111');
+    // console.log(req.files);
     const files = req.files;
-    console.log(files);
+    // console.log(files);
     cloundinary.uploader.upload(
       req.files[0].path,
       { timeout: 60000 },
@@ -34,7 +34,7 @@ const imageUpload = async (req, res, next) => {
                 },
               }
             );
-            console.log(user);
+            // console.log(user);
             fs.unlinkSync(req.files[0].path);
             fs.unlinkSync(req.files[1].path);
             res.json({ user });

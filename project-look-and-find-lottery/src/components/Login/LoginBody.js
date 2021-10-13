@@ -20,11 +20,11 @@ function LoginBody({ setError }) {
 
   const handleSubmitLogin = async e => {
     e.preventDefault();
-    console.log('User', user);
+    // console.log('User', user);
     try {
       if (isNaN(+usernameOrPhone)) {
         // console.log(usernameOrPhone);
-        console.log(usernameOrPhone);
+        // console.log(usernameOrPhone);
         const res = await axios.post('/login', {
           username: usernameOrPhone,
           password: password,
@@ -34,7 +34,7 @@ function LoginBody({ setError }) {
         const fetchDataFromProfile = async () => {
           try {
             const result = await axios.get(`/profiles/${user.id}`);
-            console.log('result: ', result);
+            // console.log('result: ', result);
             setLottery(result);
           } catch (error) {
             console.log(error);
@@ -44,7 +44,7 @@ function LoginBody({ setError }) {
 
         history.replace('/');
       } else if (!isNaN(+usernameOrPhone)) {
-        console.log(usernameOrPhone);
+        // console.log(usernameOrPhone);
         const res = await axios.post('/login', {
           phone: usernameOrPhone,
           password: password,
@@ -53,7 +53,7 @@ function LoginBody({ setError }) {
         const fetchDataFromProfile = async () => {
           try {
             const result = await axios.get(`/profiles/${user.id}`);
-            console.log('result: ', result);
+            // console.log('result: ', result);
             setLottery(result);
           } catch (error) {
             console.log(error);
@@ -108,7 +108,11 @@ function LoginBody({ setError }) {
           </div>
         </form>
         <div className='div_button_register'>
-          <button className='button_register'>สมัครสมาชิก</button>
+          <button
+            className='button_register'
+            onClick={() => history.push('/register')}>
+            สมัครสมาชิก
+          </button>
         </div>
       </div>
     </div>

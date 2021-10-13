@@ -1,9 +1,33 @@
+import { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { ThisLotteryDetailContext } from '../../contexts/thisLotteryDetailContext';
 import './style_lottery.css';
 function LotteryTicket({ item }) {
-  const { id, lotteryNumber, lotteryQuantity, lotteryLocation, dateInput } =
-    item;
+  const { thisLotteryData, setThisLotteryData } = useContext(
+    ThisLotteryDetailContext
+  );
+  const {
+    id,
+    lotteryNumber,
+    lotteryQuantity,
+    lotteryLocation,
+    dateInput,
+    userId,
+  } = item;
+  const history = useHistory();
+  const handleDirectToLotteryDetail = () => {
+    setThisLotteryData({
+      id,
+      lotteryNumber,
+      lotteryQuantity,
+      lotteryLocation,
+      dateInput,
+      userId,
+    });
+    history.push(`/lottery-detail/`);
+  };
   return (
-    <div className='lottery_body'>
+    <div className='lottery_body' onClick={handleDirectToLotteryDetail}>
       <div className='div_ticket_top'>
         <div className='lottery_number'>
           <p>

@@ -5,13 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './contexts/authContext';
 import { LotteryContextProvider } from './contexts/lotteryContext';
+import { SearchContextProvider } from './contexts/searchContext';
+import { ThisLotteryDetailContextProvider } from './contexts/thisLotteryDetailContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <LotteryContextProvider>
-        <App />
-      </LotteryContextProvider>
+      <SearchContextProvider>
+        <LotteryContextProvider>
+          <ThisLotteryDetailContextProvider>
+            <App />
+          </ThisLotteryDetailContextProvider>
+        </LotteryContextProvider>
+      </SearchContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
   document.getElementById('root')

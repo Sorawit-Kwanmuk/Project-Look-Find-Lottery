@@ -1,3 +1,8 @@
+.lottery_body>*,
+label {
+    cursor: pointer;
+}
+
 .lottery_body {
     font-size: 14px;
     width: 300px;
@@ -8,6 +13,7 @@
     align-items: center;
     padding: 2px;
     margin: 10px;
+    cursor: pointer;
 }
 
 .lottery_body_edit {

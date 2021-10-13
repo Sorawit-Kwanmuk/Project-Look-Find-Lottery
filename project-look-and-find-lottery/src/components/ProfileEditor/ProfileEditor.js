@@ -1,11 +1,13 @@
 import axios from '../../config/axios';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
+import { useHistory } from 'react-router-dom';
 
 import '../../style.css';
 
 function ProfileEditor() {
   const { user } = useContext(AuthContext);
+  const history = useHistory();
 
   const [profileImage, setProfileImage] = useState({ imageProfile: '' });
   const [qrCodeImage, setQrCodeImage] = useState({ qrCodeLine: '' });
@@ -70,7 +72,7 @@ function ProfileEditor() {
     };
     fetchProfile();
   }, []);
-  console.log(input);
+  // console.log(input);
   // console.log(profileImage);
 
   const handleSaveProfile = async e => {
@@ -90,11 +92,12 @@ function ProfileEditor() {
       );
 
       const res = () => {
-        console.log(res);
+        // console.log(res);
         setProfileImage(res.data.imageProfile);
         setQrCodeImage(res.data.qrCodeLine);
       };
-      console.log(response);
+      // console.log(response);
+      history.push('/seller');
     } catch (error) {
       console.log(error);
     }

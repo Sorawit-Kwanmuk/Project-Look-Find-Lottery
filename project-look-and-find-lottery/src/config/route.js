@@ -4,6 +4,7 @@ import Register from '../components/Register/Register';
 import LotteryInput from '../components/LotteryInput/LotteryInput';
 import Seller from '../components/Seller/Seller';
 import ProfileEditor from '../components/ProfileEditor/ProfileEditor';
+import LotteryDetail from '../components/LotteryDetail/LotteryDetail';
 
 const routes = {
   user: {
@@ -29,6 +30,10 @@ const routes = {
         component: ProfileEditor,
       },
       {
+        path: '/lottery-detail',
+        component: LotteryDetail,
+      },
+      {
         path: '/',
         component: Home,
       },
@@ -44,6 +49,10 @@ const routes = {
       {
         path: '/register',
         component: Register,
+      },
+      {
+        path: '/lottery-detail',
+        component: LotteryDetail,
       },
       {
         path: '/',

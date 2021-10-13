@@ -610,7 +610,7 @@ button {
 
 .profile_seller_in_lottery_page_area>.profile_style_lottery_page {
     margin: 0;
-    height: 25px;
+    height: auto;
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -703,7 +703,7 @@ button {
     padding-right: 20vw; */
     min-width: 300px;
     min-height: 100px;
-    background-color: #64b9ec;
+    /* background-color: #64b9ec; */
 }
 
 .profile_seller_in_lottery_page_area>.sixth {
