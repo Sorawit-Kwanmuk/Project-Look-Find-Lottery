@@ -60,17 +60,24 @@ exports.createLotteryTicket = async (req, res, next) => {
 exports.updateLottery = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { lotteryNumber, lotteryQuantity, lotteryLocation } = req.body;
+    const {
+      lotteryNumber,
+      lotteryQuantity,
+      lotteryLocation,
+      dateInput,
+      userId,
+    } = req.body;
     const [rows] = await LotteryTicket.update(
       {
         lotteryNumber,
         lotteryQuantity,
         lotteryLocation,
+        dateInput,
+        userId,
       },
       {
         where: {
           id,
-          userId: req.user.id,
         },
       }
     );

@@ -23,6 +23,7 @@ function LotteryContextProvider({ children }) {
               lotteryQuantity: lottery.lotteryQuantity,
               lotteryLocation: lottery.lotteryLocation,
               dateInput: lottery.dateInput,
+              userId: lottery.userId,
             };
           });
           // console.log(resultArray);
@@ -36,7 +37,7 @@ function LotteryContextProvider({ children }) {
     return () => {};
   }, [user]);
 
-  // console.log(lottery);
+  console.log('lottery: ', lottery);
   return (
     <LotteryContext.Provider value={{ lottery, setLottery }}>
       {children}
