@@ -1,69 +1,66 @@
 import axios from '../../config/axios';
 import { useContext, useEffect, useState } from 'react';
-import { ThisLotteryDetailContext } from '../../contexts/thisLotteryDetailContext';
 
 import LotteryTicket from '../LotteryTicket/LotteryTicket';
 import { LotteryContext } from '../../contexts/lotteryContext';
+import { useLocation, useParams } from 'react-router-dom';
 
 function LotteryDetail() {
-  const { lottery, setLottery } = useContext(LotteryContext);
-  const { thisLotteryData, setThisLotteryData } = useContext(
-    ThisLotteryDetailContext
-  );
+  const [backupLotteryData, setBackupLotteryData] = useState({
+    dateInput: '',
+    id: '',
+    lotteryLocation: '',
+    lotteryNumber: '',
+    lotteryQuantity: '',
+    userId: '',
+  });
   const [ownerOfLottery, setOwnerOfLottery] = useState([]);
-  const { id } = lottery;
+
   const [profile, setProfile] = useState({});
-  console.log('profile: ', profile);
-  console.log('ownerOfLottery: ', ownerOfLottery);
 
+  const params = useParams();
+
+  console.log('backupLotteryData: ', backupLotteryData);
   useEffect(() => {
-    const fetchDataFromProfile = async () => {
-      try {
-        const response = await axios.get(`/profiles/${thisLotteryData.userId}`);
-        setProfile(curr => ({
-          ...curr,
-          name: response.data.user.UserProfile.name,
-          phone: response.data.user.phone,
-          lineId: response.data.user.UserProfile.lineId,
-          facebookId: response.data.user.UserProfile.facebookId,
-          location: response.data.user.UserProfile.location,
-          etc: response.data.user.UserProfile.etc,
-          imageProfile: response.data.user.UserProfile.imageProfile,
-          qrCodeLine: response.data.user.UserProfile.qrCodeImage,
-          dateInput: response.data.user.UserProfile.dateInput,
-        }));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDataFromProfile();
+    try {
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
-  useEffect(() => {
-    // console.log('1xxxxxxxxxx');
-    axios
-      .get(`/lotteries/${thisLotteryData.userId}`)
-      .then(res => {
-        // console.log('result: ', res);
-        const resultArray = res.data.lottery.map(lottery => {
-          return {
-            id: lottery.id,
-            lotteryNumber: lottery.lotteryNumber,
-            lotteryQuantity: lottery.lotteryQuantity,
-            lotteryLocation: lottery.lotteryLocation,
-            dateInput: lottery.dateInput,
-          };
-        });
-        console.log('resultArray: ', resultArray);
-        // setOwnerOfLottery(cur => [...cur, resultArray]);
-        setOwnerOfLottery(resultArray);
-      })
-      .catch(err => {
-        console.log(err);
+
+  useEffect(async () => {
+    try {
+      const res1 = await axios.get(`/lotteries/lottery/${params.id}`);
+      setBackupLotteryData(res1.data.lottery);
+      const res2 = await axios.get(`/profiles/${res1.data.lottery.userId}`);
+      setProfile(curr => ({
+        ...curr,
+        name: res2.data.user.UserProfile.name,
+        phone: res2.data.user.phone,
+        lineId: res2.data.user.UserProfile.lineId,
+        facebookId: res2.data.user.UserProfile.facebookId,
+        location: res2.data.user.UserProfile.location,
+        etc: res2.data.user.UserProfile.etc,
+        imageProfile: res2.data.user.UserProfile.imageProfile,
+        qrCodeLine: res2.data.user.UserProfile.qrCodeLine,
+        dateInput: res2.data.user.UserProfile.dateInput,
+      }));
+      const res3 = await axios.get(`/lotteries/${res1.data.lottery.userId}`);
+      const resultArray = res3.data.lottery.map(lottery => {
+        return {
+          id: lottery.id,
+          lotteryNumber: lottery.lotteryNumber,
+          lotteryQuantity: lottery.lotteryQuantity,
+          lotteryLocation: lottery.lotteryLocation,
+          dateInput: lottery.dateInput,
+        };
       });
-  }, []);
-  console.log('ownerOfLottery: ', ownerOfLottery);
+      setOwnerOfLottery(resultArray);
+    } catch (error) {}
+    // console.log('1xxxxxxxxxx');
+  }, [params.id]);
+  // console.log('ownerOfLottery: ', ownerOfLottery);
 
-  console.log('thisLotteryData: ', thisLotteryData);
   return (
     <section className='profile_seller_in_lottery_page_area'>
       <div className='profile_style_lottery_page'>
@@ -76,7 +73,7 @@ function LotteryDetail() {
           <img src={profile.imageProfile} alt='' />
         </div>
         <div className='fourth_two'>
-          <img src='./img/MyQR.JPG' alt='' />
+          <img src={profile.qrCodeLine} alt='' />
         </div>
         <div className='fourth_three'>
           <div className='data seller_name'>ชื่อ: {profile.name}</div>
@@ -91,7 +88,7 @@ function LotteryDetail() {
       </div>
       <div className='fifth'>
         <div className='fifth_one'>
-          <LotteryTicket item={thisLotteryData} />
+          <LotteryTicket item={backupLotteryData} />
         </div>
       </div>
       <div className='profile_style_another_lottery'>

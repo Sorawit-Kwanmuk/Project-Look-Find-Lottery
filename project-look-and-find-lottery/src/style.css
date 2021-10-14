@@ -225,7 +225,8 @@ button {
 
 .output_search_area {
     /* display: flex; */
-    height: 800px;
+    height: 100%;
+
 
     align-items: center;
     /* background: #d6ecff; */
@@ -1432,4 +1433,13 @@ button {
 .div_ticket_access>.access_area {
     padding: 0px 4px 0px 4px;
     text-align: left;
+}
+
+.setErrorOfProfile {
+    height: 30px;
+    margin-top: -10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #ff4343;
 }

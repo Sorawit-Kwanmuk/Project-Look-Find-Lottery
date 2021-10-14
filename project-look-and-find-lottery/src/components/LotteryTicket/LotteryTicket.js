@@ -6,6 +6,7 @@ function LotteryTicket({ item }) {
   const { thisLotteryData, setThisLotteryData } = useContext(
     ThisLotteryDetailContext
   );
+  console.log('item: ', item);
   const {
     id,
     lotteryNumber,
@@ -14,17 +15,18 @@ function LotteryTicket({ item }) {
     dateInput,
     userId,
   } = item;
+
   const history = useHistory();
   const handleDirectToLotteryDetail = () => {
-    setThisLotteryData({
-      id,
-      lotteryNumber,
-      lotteryQuantity,
-      lotteryLocation,
-      dateInput,
-      userId,
-    });
-    history.push(`/lottery-detail/`);
+    // setThisLotteryData({
+    //   id,
+    //   lotteryNumber,
+    //   lotteryQuantity,
+    //   lotteryLocation,
+    //   dateInput,
+    //   userId,
+    // });
+    history.push(`/lottery-detail/${id}`);
   };
   return (
     <div className='lottery_body' onClick={handleDirectToLotteryDetail}>

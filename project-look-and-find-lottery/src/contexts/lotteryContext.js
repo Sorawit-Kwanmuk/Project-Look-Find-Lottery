@@ -8,7 +8,7 @@ function LotteryContextProvider({ children }) {
   const { user } = useContext(AuthContext);
   // console.log(user);
   const [lottery, setLottery] = useState([]);
-
+  const [statusCon, setStatusCon] = useState(false);
   useEffect(() => {
     // console.log('1xxxxxxxxxx');
     if (user) {
@@ -35,11 +35,12 @@ function LotteryContextProvider({ children }) {
     }
 
     return () => {};
-  }, [user]);
+  }, [user, statusCon]);
 
   console.log('lottery: ', lottery);
   return (
-    <LotteryContext.Provider value={{ lottery, setLottery }}>
+    <LotteryContext.Provider
+      value={{ lottery, setLottery, statusCon, setStatusCon }}>
       {children}
     </LotteryContext.Provider>
   );

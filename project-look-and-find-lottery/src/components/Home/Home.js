@@ -5,6 +5,8 @@ import { SearchContext } from '../../contexts/searchContext';
 import '../../style.css';
 import OutputSearch from './Home_components/OutputSearch';
 import SearchBar from './Home_components/SearchBar';
+import { ThisLotteryDetailContext } from '../../contexts/thisLotteryDetailContext';
+
 function Home() {
   const {
     filterSearchByNumber,
@@ -13,6 +15,7 @@ function Home() {
     setFilterSearchBySelect,
   } = useContext(SearchContext);
   const { lottery, setLottery } = useContext(LotteryContext);
+  const { setStorageLotteryFilter } = useContext(ThisLotteryDetailContext);
   // const [allLottery, setAllLottery] = useState([]);
   const [filterSearch, setFilterSearch] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
@@ -29,6 +32,7 @@ function Home() {
         setFilterSearch(filterLottery(response.data.lottery));
         // console.log(response.data.lottery);
         // console.log('xxxx');
+        setStorageLotteryFilter(filterLottery(response.data.lottery));
       } catch (error) {
         console.log(error);
       }
@@ -60,6 +64,9 @@ function Home() {
 
     setIsSearch(curr => !curr);
   };
+
+  useEffect(() => {}, []);
+  console.log('filterSearch :', filterSearch);
   return (
     <>
       <SearchBar onSubmitSearch={onSubmitSearch} />

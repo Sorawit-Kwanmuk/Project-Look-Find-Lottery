@@ -34,5 +34,10 @@ router.put(
   upload.array('cloudinput'),
   uploadController.imageUpload
 );
+router.post(
+  '/upload-to-cloud/:id',
+  upload.array('cloudinput'),
+  uploadController.createProfile
+);
 
 module.exports = router;

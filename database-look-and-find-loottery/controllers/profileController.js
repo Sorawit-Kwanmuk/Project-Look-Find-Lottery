@@ -50,6 +50,8 @@ exports.updateProfile = async (req, res, next) => {
       qrCodeLine,
       status,
     } = req.body;
+    console.log('status: ', status);
+    console.log('req.body: ', req.body);
     // console.log(req.body);
     if (status === 'update') {
       const resultUser = await User.update(

@@ -1,6 +1,9 @@
+import { useHistory } from 'react-router-dom';
 import '../../../style.css';
 import LotteryTicket from '../../LotteryTicket/LotteryTicket';
+
 function OutputSearch({ filterSearch }) {
+  console.log('filterSearch1: ', filterSearch);
   return (
     <section className='output_search_area'>
       <div className='output_search'>

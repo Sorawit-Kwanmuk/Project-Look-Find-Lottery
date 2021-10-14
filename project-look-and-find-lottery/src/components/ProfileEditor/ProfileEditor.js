@@ -2,6 +2,9 @@ import axios from '../../config/axios';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
 import { useHistory } from 'react-router-dom';
+import validator from 'validator';
+import avatar from '../../images/avatar.png';
+import qrCode from '../../images/qrCode.png';
 
 import '../../style.css';
 
@@ -9,8 +12,9 @@ function ProfileEditor() {
   const { user } = useContext(AuthContext);
   const history = useHistory();
 
-  const [profileImage, setProfileImage] = useState({ imageProfile: '' });
+  const [profileImage, setProfileImage] = useState();
   const [qrCodeImage, setQrCodeImage] = useState({ qrCodeLine: '' });
+  const [error, setError] = useState({});
   const [input, setInput] = useState({
     username: '',
     name: '',
@@ -58,13 +62,15 @@ function ProfileEditor() {
         setProfileImage(
           response.data.user.UserProfile !== null
             ? response.data.user.UserProfile.imageProfile
-            : ''
+            : avatar
         );
         setQrCodeImage(
           response.data.user.UserProfile !== null
-            ? response.data.user.UserProfile.qrCodeImage
-            : ''
+            ? response.data.user.UserProfile.qrCodeLine
+            : qrCode
         );
+
+        // console.log('response.data.user.UserProfile: ', response.data.user);
         // console.log(response.data.user);
       } catch (error) {
         console.log(error);
@@ -74,30 +80,48 @@ function ProfileEditor() {
   }, []);
   // console.log(input);
   // console.log(profileImage);
-
+  console.log('qrCodeImage: ', qrCodeImage);
+  console.log('profileImage: ', profileImage);
   const handleSaveProfile = async e => {
     try {
       e.preventDefault();
-      const formData = new FormData();
-      formData.append('cloudinput', profileImage.imageProfile);
-      formData.append('cloudinput', qrCodeImage.qrCodeLine);
-      const response = await axios.put(`/profiles/${user.id}`, input);
-
-      // console.log('1');
-      await axios.put(
-        `/upload/upload-to-cloud/${user.id}`,
-        // { imageProfile: input.imageProfile },
-        // { qrCodeLine: input.qrCodeLine }
-        formData
-      );
-
-      const res = () => {
-        // console.log(res);
-        setProfileImage(res.data.imageProfile);
-        setQrCodeImage(res.data.qrCodeLine);
-      };
-      // console.log(response);
-      history.push('/seller');
+      let isError = false;
+      if (input.name.trim() === '') {
+        setError({ name: 'กรุณากรอกชื่อ' });
+        isError = true;
+      }
+      if (!validator.isEmail(input.email)) {
+        setError({ email: 'กรุณากรอกอีเมล์ให้ถูกต้อง' });
+        isError = true;
+      }
+      if (input.location.trim() === '') {
+        setError({ location: 'กรุณากรอกสถานที่ขายหวย' });
+        isError = true;
+      }
+      if (!isError) {
+        const formData = new FormData();
+        formData.append('cloudinput', profileImage.imageProfile);
+        formData.append('cloudinput', qrCodeImage.qrCodeLine);
+        formData.append('username', input.username);
+        formData.append('name', input.name);
+        formData.append('email', input.email);
+        formData.append('phone', input.phone);
+        formData.append('lineId', input.lineId);
+        formData.append('facebookId', input.facebookId);
+        formData.append('location', input.location);
+        formData.append('etc', input.etc);
+        if (input.status === 'update') {
+          const response = await axios.put(`/profiles/${user.id}`, input);
+        } else if (input.status === 'create') {
+          await axios.post(`/upload/upload-to-cloud/${user.id}`, formData);
+        }
+        const res = () => {
+          setProfileImage(res.data.imageProfile);
+          setQrCodeImage(res.data.qrCodeLine);
+        };
+        // console.log(response);
+        history.push('/seller');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -151,6 +175,9 @@ function ProfileEditor() {
                   onChange={e => setInput({ ...input, name: e.target.value })}
                 />
               </div>
+              {error.name && (
+                <div className='setErrorOfProfile'>{error.name}</div>
+              )}
               <div className='div email_editor'>
                 <div className='border'>
                   <label htmlFor='email_editor' className='label of_ame_editor'>
@@ -165,6 +192,9 @@ function ProfileEditor() {
                   onChange={e => setInput({ ...input, email: e.target.value })}
                 />
               </div>
+              {error.email && (
+                <div className='setErrorOfProfile'>{error.email}</div>
+              )}
               <div className='div phone_editor'>
                 <div className='border'>
                   <label
@@ -182,6 +212,7 @@ function ProfileEditor() {
                   readOnly
                 />
               </div>
+
               <div className='div id_line_editor'>
                 <div className='border'>
                   <label
@@ -219,7 +250,7 @@ function ProfileEditor() {
                   <label
                     htmlFor='access_editor'
                     className='label of_access_editor'>
-                    ที่อยู่ ณ ปัจจุบัน
+                    สถานที่ขาย ณ ปัจจุบัน
                   </label>
                 </div>
                 <input
@@ -231,6 +262,9 @@ function ProfileEditor() {
                   }
                 />
               </div>
+              {error.location && (
+                <div className='setErrorOfProfile'>{error.location}</div>
+              )}
               <div className='div etc_editor'>
                 <div className='border border_etc'>
                   <label htmlFor='etc_editor' className='label of_etc_editor'>
@@ -260,6 +294,7 @@ function ProfileEditor() {
                   }
                 />
               </div>
+
               <div className='div image_qr_code_line_editor'>
                 <div className='border'>
                   <label

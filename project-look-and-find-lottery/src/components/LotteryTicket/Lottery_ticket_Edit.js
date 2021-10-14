@@ -19,7 +19,7 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
     lotteryLocation,
     dateInput,
   });
-  const { lottery, setLottery } = useContext(LotteryContext);
+  const { lottery, setLottery, setStatusCon } = useContext(LotteryContext);
   const handleEditTicket = async () => {
     try {
       setStatus(cur => !cur);
@@ -27,16 +27,22 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
       console.log(error);
     }
   };
+  console.log('id1: ', id);
   const handleSaveEdited = async () => {
     try {
+      console.log('id: ', id);
+      console.log('lottery1452: ', lottery);
       const res = await axios.put(`/lotteries/${id}`, editLotteryData);
       // console.log(res);
       const newLottery = [...lottery];
       const index = newLottery.findIndex(lottery => lottery.id === id);
+      console.log('index: ', index);
       if (index !== -1) {
         newLottery[index] = editLotteryData;
+        console.log('newLottery: ', newLottery);
         setLottery(newLottery);
       }
+      setStatusCon(cur => !cur);
       setStatus(cur => !cur);
     } catch (error) {
       console.log(error);

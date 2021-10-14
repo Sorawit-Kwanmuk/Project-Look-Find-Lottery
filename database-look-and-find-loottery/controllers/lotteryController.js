@@ -37,6 +37,19 @@ exports.getLotteryById = async (req, res, next) => {
     next(error);
   }
 };
+exports.getLotteryByLotteryId = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const lottery = await LotteryTicket.findOne({
+      where: {
+        id,
+      },
+    });
+    res.status(200).json({ lottery });
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.createLotteryTicket = async (req, res, next) => {
   try {

@@ -49,8 +49,7 @@ exports.authenticate = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
   try {
-    const { username, phone, email, password, confirmPassword, name } =
-      req.body;
+    const { username, phone, email, password, confirmPassword } = req.body;
     if (password !== confirmPassword) {
       // return res.status(400).json({ message: 'Passwords do not match' });
 
@@ -64,14 +63,14 @@ exports.register = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    await UserProfile.create({
-      name: '',
-      line_id: '',
-      facebook_id: '',
-      location: '',
-      etc: '',
-      user_id,
-    });
+    // await UserProfile.create({
+    //   name: '',
+    //   line_id: '',
+    //   facebook_id: '',
+    //   location: '',
+    //   etc: '',
+    //   userId,
+    // });
     res.status(201).json({ message: 'User account has been created' });
   } catch (error) {
     next(error);

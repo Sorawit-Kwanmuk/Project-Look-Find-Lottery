@@ -30,7 +30,7 @@ const routes = {
         component: ProfileEditor,
       },
       {
-        path: '/lottery-detail',
+        path: '/lottery-detail/:id',
         component: LotteryDetail,
       },
       {
@@ -51,7 +51,7 @@ const routes = {
         component: Register,
       },
       {
-        path: '/lottery-detail',
+        path: '/lottery-detail/:id',
         component: LotteryDetail,
       },
       {

@@ -6,10 +6,13 @@ import Lottery_ticket_Edit from '../LotteryTicket/Lottery_ticket_Edit';
 import { Link } from 'react-router-dom';
 import { setToken } from '../../services/localStorage';
 import { LotteryContext } from '../../contexts/lotteryContext';
+import avatar from '../../images/avatar.png';
+import qrCode from '../../images/qrCode.png';
 
 function Seller() {
   const { user } = useContext(AuthContext);
-  const { lottery, setLottery } = useContext(LotteryContext);
+  const { lottery, setLottery, statusCon, setStatusCon } =
+    useContext(LotteryContext);
   // console.log(lottery);
   const [profile, setProfile] = useState({
     name: '',
@@ -61,11 +64,11 @@ function Seller() {
           imageProfile:
             response.data.user.UserProfile !== null
               ? response.data.user.UserProfile.imageProfile
-              : '',
+              : avatar,
           qrCodeLine:
             response.data.user.UserProfile !== null
-              ? response.data.user.UserProfile.qrCodeImage
-              : '',
+              ? response.data.user.UserProfile.qrCodeLine
+              : qrCode,
         }));
       } catch (error) {
         console.log(error);
@@ -266,6 +269,7 @@ function Seller() {
             <Lottery_ticket_Edit
               key={item.id}
               item={item}
+              setStatusCon={setStatusCon}
               handleClickDeleteTicket={() => handleClickDeleteTicket(item.id)}
             />
           ))}

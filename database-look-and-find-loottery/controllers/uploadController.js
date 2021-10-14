@@ -7,7 +7,6 @@ const imageUpload = async (req, res, next) => {
   const uploadPromise = util.promisify(cloundinary.uploader.upload);
   // upload.array('cloudinput');
   const { id } = req.params;
-  const { imageProfile, qrCodeLine } = req.body;
   try {
     // console.log('11111');
     // console.log(req.files);
@@ -62,5 +61,51 @@ const imageUpload = async (req, res, next) => {
     next(error);
   }
 };
+const createProfile = async (req, res, next) => {
+  util.promisify(cloundinary.uploader.upload);
+  const { id } = req.params;
 
-module.exports = { imageUpload };
+  const { username, name, email, phone, lineId, facebookId, location, etc } =
+    req.body;
+
+  try {
+    console.log('req.files[1]: ', req.files[1]);
+    console.log('req.files[0]: ', req.files[0]);
+    cloundinary.uploader.upload(
+      req.files[0].path,
+      { timeout: 60000 },
+      (err1, result1) => {
+        console.log(err1);
+        cloundinary.uploader.upload(
+          req.files[1].path,
+          { timeout: 60000 },
+          async (err2, result2) => {
+            console.log(err2);
+            const user = await UserProfile.create({
+              username,
+              name,
+              email,
+              phone,
+              lineId,
+              facebookId,
+              location,
+              etc,
+              imageProfile: result1.secure_url,
+              qrCodeLine: result2.secure_url,
+              userId: id,
+            });
+
+            // console.log(user);
+            fs.unlinkSync(req.files[0].path);
+            fs.unlinkSync(req.files[1].path);
+            res.json({ user });
+          }
+        );
+      }
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { imageUpload, createProfile };
