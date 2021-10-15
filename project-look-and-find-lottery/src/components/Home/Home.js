@@ -10,15 +10,15 @@ import { ThisLotteryDetailContext } from '../../contexts/thisLotteryDetailContex
 function Home() {
   const {
     filterSearchByNumber,
-    setFilterSearchByNum,
     filterSearchBySelect,
-    setFilterSearchBySelect,
+    statusFix,
+    setStatusFix,
   } = useContext(SearchContext);
-  const { lottery, setLottery } = useContext(LotteryContext);
   const { setStorageLotteryFilter } = useContext(ThisLotteryDetailContext);
   // const [allLottery, setAllLottery] = useState([]);
   const [filterSearch, setFilterSearch] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
+  const [error, setError] = useState('');
 
   // console.log('allLottery :', allLottery);
   useEffect(() => {
@@ -32,21 +32,36 @@ function Home() {
         setFilterSearch(filterLottery(response.data.lottery));
         // console.log(response.data.lottery);
         // console.log('xxxx');
-        setStorageLotteryFilter(filterLottery(response.data.lottery));
+        // setStorageLotteryFilter(filterLottery(response.data.lottery));
       } catch (error) {
         console.log(error);
       }
     };
     fetchAllLotteryFromTable();
-  }, []);
+  }, [isSearch, statusFix]);
   // console.log(allLottery);
-  useEffect(() => {
-    setFilterSearch(curr => filterLottery(curr));
-  }, [isSearch]);
+  // useEffect(() => {
+  //   setFilterSearch(curr => filterLottery(curr));
+  // }, [isSearch]);
+  // console.log('filterSearchBySelect: ', filterSearchBySelect);
+  // console.log(isSearch);
 
   function filterLottery(array) {
+    if (isNaN(filterSearchByNumber)) {
+      return setError('กรุณาค้นหาเป็นตัวเลข');
+    }
+    if (filterSearchByNumber === '' || !isNaN(filterSearchByNumber)) {
+      setError('');
+    }
+    // console.log('filterSearchByNumber: ', filterSearchByNumber);
+    // console.log('array; ', array);
+
     return array.filter(lottery => {
-      if (filterSearchBySelect === 'fullNumber') {
+      if (filterSearchByNumber === '') {
+        return lottery.lotteryNumber;
+      } else if (filterSearchBySelect === '') {
+        return lottery.lotteryNumber.includes(filterSearchByNumber);
+      } else if (filterSearchBySelect === 'fullNumber') {
         return lottery.lotteryNumber.slice(0, 6) === filterSearchByNumber;
       } else if (filterSearchBySelect === 'threeFront') {
         return lottery.lotteryNumber.slice(0, 3) === filterSearchByNumber;
@@ -54,8 +69,6 @@ function Home() {
         return lottery.lotteryNumber.slice(3, 6) === filterSearchByNumber;
       } else if (filterSearchBySelect === 'twoBack') {
         return lottery.lotteryNumber.slice(4, 6) === filterSearchByNumber;
-      } else {
-        return true;
       }
     });
   }
@@ -66,11 +79,11 @@ function Home() {
   };
 
   useEffect(() => {}, []);
-  console.log('filterSearch :', filterSearch);
+  // console.log('filterSearch :', filterSearch);
   return (
     <>
-      <SearchBar onSubmitSearch={onSubmitSearch} />
-      <OutputSearch filterSearch={filterSearch} />
+      <SearchBar onSubmitSearch={onSubmitSearch} error={error} />
+      {!error && <OutputSearch filterSearch={filterSearch} />}
     </>
   );
 }

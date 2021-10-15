@@ -129,3 +129,25 @@ exports.deleteLottery = async (req, res, next) => {
     next(error);
   }
 };
+exports.deleteAllLottery = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const rows = await LotteryTicket.destroy({
+      where: {
+        userId: id,
+      },
+    });
+
+    if (rows === 0) {
+      res.status(404).json({
+        message: 'Fail to delete lottery',
+      });
+    }
+
+    res.status(200).json({
+      message: 'Lottery deleted successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+};

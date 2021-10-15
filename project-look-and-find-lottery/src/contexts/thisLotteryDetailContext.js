@@ -4,7 +4,7 @@ const ThisLotteryDetailContext = createContext();
 function ThisLotteryDetailContextProvider({ children }) {
   const [thisLotteryData, setThisLotteryData] = useState(null);
   const [storageLotteryFilter, setStorageLotteryFilter] = useState(null);
-  console.log('thisLotteryData in Context', thisLotteryData);
+  // console.log('thisLotteryData in Context', thisLotteryData);
   return (
     <ThisLotteryDetailContext.Provider
       value={{

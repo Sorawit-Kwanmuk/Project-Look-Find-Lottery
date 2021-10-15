@@ -6,7 +6,7 @@ label {
 .lottery_body {
     font-size: 14px;
     width: 300px;
-    height: 100px;
+    /* height: 100px; */
     background-color: #64b9ec;
     display: flex;
     flex-direction: column;
@@ -14,12 +14,13 @@ label {
     padding: 2px;
     margin: 10px;
     cursor: pointer;
+    padding-bottom: 5px;
 }
 
 .lottery_body_edit {
     font-size: 14px;
     width: 300px;
-    height: 150px;
+    min-height: 16px;
     background-color: #64b9ec;
     display: flex;
     flex-direction: column;
@@ -151,12 +152,12 @@ label {
 }
 
 .div_ticket_access>.access_area {
-    height: 65%;
+    min-height: 40px;
     background-color: white;
-
     border-radius: 0px 0px 5px 5px;
-    margin: 0px 5px 0px 5px;
+    margin: 0px 5px 5px 5px;
 }
+
 
 .input_access_area {
     padding-bottom: 14%;

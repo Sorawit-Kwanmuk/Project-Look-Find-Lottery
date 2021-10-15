@@ -14,6 +14,9 @@ function Seller() {
   const { lottery, setLottery, statusCon, setStatusCon } =
     useContext(LotteryContext);
   // console.log(lottery);
+  const [error, setError] = useState({});
+  const [trueFalse, setTrueFalse] = useState(false);
+
   const [profile, setProfile] = useState({
     name: '',
     phone: '',
@@ -33,7 +36,11 @@ function Seller() {
   useEffect(() => {
     const fetchDataFromProfile = async () => {
       try {
+        console.log('9999999999999999999999999999999999999999999999999999');
         const response = await axios.get(`/profiles/${user.id}`);
+        console.log('userId: ', user.id);
+        console.log('777777777777777777777777777777777777777777777777');
+        console.log(response.data);
         setProfile(curr => ({
           ...curr,
           name:
@@ -75,7 +82,8 @@ function Seller() {
       }
     };
     fetchDataFromProfile();
-  }, []);
+  }, [trueFalse]);
+
   // console.log(profile);
   const handleClickDeleteTicket = async id => {
     try {
@@ -93,41 +101,107 @@ function Seller() {
   };
   const handleSaveLottery = async e => {
     try {
+      // console.log(status);
       e.preventDefault();
+      let isError = false;
       // console.log(profile);
-      const response = await axios.post(`/lotteries/${user.id}`, {
-        lotteryNumber: profile.lotteryNumber,
-        lotteryQuantity: profile.lotteryQuantity,
-        lotteryLocation: profile.lotteryLocation,
-        dateInput: profile.dateInput,
-      });
-      const newArr = [...lottery];
-      // console.log(newArr);
-      newArr.push({
-        lotteryNumber: profile.lotteryNumber,
-        lotteryQuantity: profile.lotteryQuantity,
-        lotteryLocation: profile.lotteryLocation,
-        dateInput: profile.dateInput,
-      });
-      setLottery(newArr);
-      setProfile(curr => ({
-        ...curr,
-        lotteryNumber: '',
-        lotteryQuantity: '',
-      }));
-      // setToken(response.data.token);
+      if (isNaN(profile.lotteryNumber)) {
+        setError(cur => {
+          return { ...cur, lotteryNumber: 'กรุณากรอกตัวเลขเท่านั้น' };
+        });
+        isError = true;
+      }
+      if (profile.lotteryNumber.length !== 6) {
+        setError(cur => {
+          return { ...cur, lotteryNumber: 'กรุณากรอกตัวเลข 6 หลัก' };
+        });
+        isError = true;
+      }
+      if (profile.lotteryNumber === '') {
+        setError(cur => {
+          return { ...cur, lotteryNumber: 'กรุณากรอกตัวเลข' };
+        });
+        isError = true;
+      }
+      if (profile.lotteryQuantity === '') {
+        setError(cur => {
+          return { ...cur, lotteryQuantity: 'กรุณากรอกจำนวนหวย' };
+        });
+        isError = true;
+      }
+      if (isNaN(profile.lotteryQuantity)) {
+        setError(cur => {
+          return { ...cur, lotteryQuantity: 'จำนวนหวยต้องเป็นตัวเลข' };
+        });
+        isError = true;
+      }
+      if (profile.lotteryLocation === '') {
+        setError(cur => {
+          return { ...cur, lotteryLocation: 'กรุณากรอกสถานที่ขายหวย' };
+        });
+      }
+      // if (
+      //   profile.dateInput.slice(8, 10) !== 1 ||
+      //   profile.dateInput.slice(8, 10) !== 16
+      // ) {
+      //   setError(cur => {
+      //     return { ...cur, dateInput: 'กรุณากรอกงวดหวยให้ถูกต้อง' };
+      //   });
+      // }
+      if (!isError) {
+        const response = await axios.post(`/lotteries/${user.id}`, {
+          lotteryNumber: profile.lotteryNumber,
+          lotteryQuantity: profile.lotteryQuantity,
+          lotteryLocation: profile.lotteryLocation,
+          dateInput: profile.dateInput,
+        });
+        const newArr = [...lottery];
+        // console.log(newArr);
+        newArr.push({
+          lotteryNumber: profile.lotteryNumber,
+          lotteryQuantity: profile.lotteryQuantity,
+          lotteryLocation: profile.lotteryLocation,
+          dateInput: profile.dateInput,
+        });
+        setLottery(newArr);
+        setProfile(curr => ({
+          ...curr,
+          lotteryNumber: '',
+          lotteryQuantity: '',
+        }));
+        // setToken(response.data.token);
 
-      // console.log(response);
+        // console.log(response);
+        setTrueFalse(cur => !cur);
+        console.log('gggggggggggggggggggggggg');
+        setStatusCon(cur => !cur);
+        // console.log(trueFalse);
+        setError({});
+      }
     } catch (error) {
       console.dir(error);
     }
   };
+  // console.log(new Date().toISOString().slice(8, 10));
 
   const handleClickCancel = () => {
-    setProfile({
+    setProfile(curr => ({
+      ...curr,
       lotteryNumber: '',
       lotteryQuantity: '',
-    });
+    }));
+  };
+  const handeDeleteAllLottery = async () => {
+    try {
+      // console.log(user.id);
+      const result = window.confirm('คุณต้องการลบหวยทั้งหมดใช่หรือไม่');
+      if (result) {
+        await axios.delete(`/lotteries/delete-all/${user.id}`);
+        setLottery([]);
+      }
+    } catch (error) {
+      console.dir(error);
+    }
   };
 
   return (
@@ -192,6 +266,9 @@ function Seller() {
                     setProfile({ ...profile, lotteryNumber: e.target.value })
                   }
                 />
+                {error.lotteryNumber && (
+                  <p className='errorSeller'>{error.lotteryNumber}</p>
+                )}
               </div>
               <div className='div1 lottery_value'>
                 <label htmlFor='input_lottery_value'>จำนวน</label>
@@ -200,6 +277,7 @@ function Seller() {
                   id='input_lottery_value'
                   placeholder='ใส่จำนวนหวย'
                   value={profile.lotteryQuantity}
+                  maxLength='3'
                   onChange={e =>
                     setProfile({
                       ...profile,
@@ -207,6 +285,9 @@ function Seller() {
                     })
                   }
                 />
+                {error.lotteryQuantity && (
+                  <p className='errorSeller'>{error.lotteryQuantity}</p>
+                )}
               </div>
             </div>
             <div className='wrap_middle'>
@@ -226,6 +307,9 @@ function Seller() {
                     setProfile({ ...profile, lotteryLocation: e.target.value })
                   }
                 />
+                {error.lotteryLocation && (
+                  <p className='errorSeller'>{error.lotteryLocation}</p>
+                )}
               </div>
               <div className='middle_input2'>
                 <label
@@ -245,6 +329,9 @@ function Seller() {
                     })
                   }
                 />
+                {error.dateInput && (
+                  <p className='errorSeller'>{error.dateInput}</p>
+                )}
               </div>
             </div>
 
@@ -256,7 +343,10 @@ function Seller() {
                 onClick={handleClickCancel}>
                 ยกเลิก
               </button>
-              <button type='button' className='button_delete_all'>
+              <button
+                type='button'
+                className='button_delete_all'
+                onClick={handeDeleteAllLottery}>
                 ลบหวยทั้งหมด
               </button>
             </div>
@@ -271,6 +361,7 @@ function Seller() {
               item={item}
               setStatusCon={setStatusCon}
               handleClickDeleteTicket={() => handleClickDeleteTicket(item.id)}
+              setTrueFalse={setTrueFalse}
             />
           ))}
         </div>

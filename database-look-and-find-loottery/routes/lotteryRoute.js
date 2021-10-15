@@ -10,5 +10,10 @@ router.get('/lottery/:id', lotteryController.getLotteryByLotteryId);
 router.post('/:id', authenticate, lotteryController.createLotteryTicket);
 router.put('/:id', authenticate, lotteryController.updateLottery);
 router.delete('/:id', authenticate, lotteryController.deleteLottery);
+router.delete(
+  '/delete-all/:id',
+  authenticate,
+  lotteryController.deleteAllLottery
+);
 
 module.exports = router;

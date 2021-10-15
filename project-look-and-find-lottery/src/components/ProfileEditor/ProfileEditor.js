@@ -80,22 +80,28 @@ function ProfileEditor() {
   }, []);
   // console.log(input);
   // console.log(profileImage);
-  console.log('qrCodeImage: ', qrCodeImage);
-  console.log('profileImage: ', profileImage);
+  // console.log('qrCodeImage: ', qrCodeImage);
+  // console.log('profileImage: ', profileImage);
   const handleSaveProfile = async e => {
     try {
       e.preventDefault();
       let isError = false;
       if (input.name.trim() === '') {
-        setError({ name: 'กรุณากรอกชื่อ' });
+        setError(cur => {
+          return { ...cur, name: 'กรุณากรอกชื่อ' };
+        });
         isError = true;
       }
       if (!validator.isEmail(input.email)) {
-        setError({ email: 'กรุณากรอกอีเมล์ให้ถูกต้อง' });
+        setError(cur => {
+          return { ...cur, email: 'กรุณากรอกอีเมล์ให้ถูกต้อง' };
+        });
         isError = true;
       }
       if (input.location.trim() === '') {
-        setError({ location: 'กรุณากรอกสถานที่ขายหวย' });
+        setError(cur => {
+          return { ...cur, location: 'กรุณากรอกสถานที่ขายหวย' };
+        });
         isError = true;
       }
       if (!isError) {
@@ -112,6 +118,7 @@ function ProfileEditor() {
         formData.append('etc', input.etc);
         if (input.status === 'update') {
           const response = await axios.put(`/profiles/${user.id}`, input);
+          await axios.put(`/upload/upload-to-cloud/${user.id}`, formData);
         } else if (input.status === 'create') {
           await axios.post(`/upload/upload-to-cloud/${user.id}`, formData);
         }

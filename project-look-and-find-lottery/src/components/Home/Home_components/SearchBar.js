@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { SearchContext } from '../../../contexts/searchContext';
 import '../../../style.css';
-function SearchBar({ onSubmitSearch }) {
+function SearchBar({ onSubmitSearch, error }) {
   const {
     filterSearchByNumber,
     setFilterSearchByNum,
@@ -18,6 +18,7 @@ function SearchBar({ onSubmitSearch }) {
           type='text'
           className='search_box'
           value={filterSearchByNumber}
+          maxLength='6'
           onChange={e => setFilterSearchByNum(e.target.value)}
         />
         <select
@@ -33,6 +34,7 @@ function SearchBar({ onSubmitSearch }) {
         </select>
         <button type='submit'>ค้นหา</button>
       </form>
+      {error && <p className='searchError'>{error}</p>}
     </section>
   );
 }

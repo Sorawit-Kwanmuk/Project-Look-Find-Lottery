@@ -6,7 +6,7 @@ function LotteryTicket({ item }) {
   const { thisLotteryData, setThisLotteryData } = useContext(
     ThisLotteryDetailContext
   );
-  console.log('item: ', item);
+  // console.log('item: ', item);
   const {
     id,
     lotteryNumber,
@@ -49,13 +49,13 @@ function LotteryTicket({ item }) {
       <div className='div_ticket_bottom'>
         <div className='div_ticket_access'>
           <div className='label_style'>
-            <label htmlFor=''>สถานที่</label>
+            <label htmlFor=''>สถานที่ขาย</label>
           </div>
           <div className='access_area'>{lotteryLocation}</div>
         </div>
         <div className='div_ticket_date'>
           <div className='label_style'>
-            <label htmlFor=''>วันที่เข้าสู่ระบบ</label>
+            <label htmlFor=''>งวดหวย</label>
           </div>
           <div className='date_area'>
             <p>{dateInput.slice(0, 10)}</p>

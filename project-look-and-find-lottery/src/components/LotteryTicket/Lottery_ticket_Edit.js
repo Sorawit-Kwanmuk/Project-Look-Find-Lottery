@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import axios from '../../config/axios';
 import { LotteryContext } from '../../contexts/lotteryContext';
 import './style_lottery.css';
-function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
+function Lottery_ticket_Edit({ item, handleClickDeleteTicket, setTrueFalse }) {
   const {
     id,
     lotteryNumber,
@@ -19,27 +19,30 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
     lotteryLocation,
     dateInput,
   });
+  setTrueFalse(status);
   const { lottery, setLottery, setStatusCon } = useContext(LotteryContext);
   const handleEditTicket = async () => {
     try {
       setStatus(cur => !cur);
+      setTrueFalse(cur => !cur);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log('id1: ', id);
+  // console.log('id1: ', id);
   const handleSaveEdited = async () => {
     try {
-      console.log('id: ', id);
-      console.log('lottery1452: ', lottery);
+      // console.log('id: ', id);
+      // console.log('lottery1452: ', lottery);
+      // console.log('editLotteryData: ', editLotteryData);
       const res = await axios.put(`/lotteries/${id}`, editLotteryData);
       // console.log(res);
       const newLottery = [...lottery];
       const index = newLottery.findIndex(lottery => lottery.id === id);
-      console.log('index: ', index);
+      // console.log('index: ', index);
       if (index !== -1) {
         newLottery[index] = editLotteryData;
-        console.log('newLottery: ', newLottery);
+        // console.log('newLottery: ', newLottery);
         setLottery(newLottery);
       }
       setStatusCon(cur => !cur);
@@ -48,7 +51,7 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
       console.log(error);
     }
   };
-  console.log('editLotteryData', editLotteryData);
+  // console.log('editLotteryData', editLotteryData);
 
   return (
     <>
@@ -63,10 +66,10 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
                 maxLength='6'
                 minLength='6'
                 onChange={e =>
-                  setEditLotteryData({
-                    ...editLotteryData,
+                  setEditLotteryData(curr => ({
+                    ...curr,
                     lotteryNumber: e.target.value,
-                  })
+                  }))
                 }
               />
             </div>
@@ -79,10 +82,10 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
                 className='amount_lottery'
                 value={editLotteryData.lotteryQuantity}
                 onChange={e =>
-                  setEditLotteryData({
-                    ...editLotteryData,
+                  setEditLotteryData(curr => ({
+                    ...curr,
                     lotteryQuantity: e.target.value,
-                  })
+                  }))
                 }
               />
               <label htmlFor='' className='amount_lottry_label2'>
@@ -101,10 +104,10 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
                 className='input_access_area'
                 value={editLotteryData.lotteryLocation}
                 onChange={e =>
-                  setEditLotteryData({
-                    ...editLotteryData,
+                  setEditLotteryData(curr => ({
+                    ...curr,
                     lotteryLocation: e.target.value,
-                  })
+                  }))
                 }
               />
             </div>
@@ -117,10 +120,10 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
                 className='input_date_area'
                 value={editLotteryData.dateInput}
                 onChange={e =>
-                  setEditLotteryData({
-                    ...editLotteryData,
+                  setEditLotteryData(curr => ({
+                    ...curr,
                     dateInput: e.target.value,
-                  })
+                  }))
                 }
               />
             </div>
@@ -165,7 +168,7 @@ function Lottery_ticket_Edit({ item, handleClickDeleteTicket }) {
             </div>
             <div className='div_ticket_date'>
               <div className='label_style'>
-                <label htmlFor=''>วันที่เข้าสู่ระบบ</label>
+                <label htmlFor=''>งวดหวย</label>
               </div>
               <div className='date_area'>
                 <p>{dateInput.slice(0, 10)}</p>

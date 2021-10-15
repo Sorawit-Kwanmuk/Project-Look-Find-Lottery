@@ -37,7 +37,7 @@ function LotteryContextProvider({ children }) {
     return () => {};
   }, [user, statusCon]);
 
-  console.log('lottery: ', lottery);
+  // console.log('lottery: ', lottery);
   return (
     <LotteryContext.Provider
       value={{ lottery, setLottery, statusCon, setStatusCon }}>

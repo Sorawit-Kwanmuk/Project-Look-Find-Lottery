@@ -69,8 +69,8 @@ const createProfile = async (req, res, next) => {
     req.body;
 
   try {
-    console.log('req.files[1]: ', req.files[1]);
-    console.log('req.files[0]: ', req.files[0]);
+    // console.log('req.files[1]: ', req.files[1]);
+    // console.log('req.files[0]: ', req.files[0]);
     cloundinary.uploader.upload(
       req.files[0].path,
       { timeout: 60000 },

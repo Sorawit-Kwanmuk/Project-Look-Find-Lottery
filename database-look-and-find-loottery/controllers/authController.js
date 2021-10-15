@@ -50,10 +50,14 @@ exports.authenticate = async (req, res, next) => {
 exports.register = async (req, res, next) => {
   try {
     const { username, phone, email, password, confirmPassword } = req.body;
+    if (username === '') {
+      return res.status(400).json({ message: 'กรุณาใส่ชื่อผู้ใช้งาน' });
+    }
     if (password !== confirmPassword) {
-      // return res.status(400).json({ message: 'Passwords do not match' });
-
-      throw new CustomError('Passwords do not match', 400);
+      throw new CustomError(
+        'ยืนยันรหัสไม่ผ่าน กรุณาใส่รหัสผ่านใหม่อีกครั้ง',
+        400
+      );
     }
     const hashedPassword = await bcrypt.hash(password, 10); //10 คือ salt
     await User.create({
